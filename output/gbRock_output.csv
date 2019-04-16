@@ -1,0 +1,16 @@
+500000 iterations
+
+Probabilities of good hands:
+4,5,6,7,
+0.293496,0.333868,0.538354,0.586188,
+
+hand sizes/types,theNutz,good_mix,landsAndSpells,
+7,0.121974,0.2065,0.257714,
+6,0.060152,0.189506,0.288696,
+5,0.01832,0.093542,0.222006,
+4,0.0,0.050678,0.242818,
+
+p of good hand by 5
+0.87249
+p of good hand by 3
+0.90989
