@@ -8,7 +8,10 @@ class Hand:
 			self.deck, self.decklist = self.process(deck_name)
 		else:
 			self.deck = ["Storm Crow"] * 60
-			self.decklist = dict(Counter(deck))
+			self.decklist = dict(Counter(self.deck))
+
+	def hand_as_str(self):
+		return str(self.card_counts)
 
 	def process(self, filename):
 		with open(filename,"r") as file:
@@ -43,10 +46,15 @@ class Hand:
 		return dict(self.decklist.copy())
 
 	def new_hand(self, size = 7):
+		self.size = size
 		draws = np.random.choice(len(self.deck),size,replace = False)
 		self.card_counts = Counter([self.deck[i] for i in draws])
 		self.cards = set(self.card_counts.keys())
 		return self.card_counts.copy()
+
+	def set_hand(self, newHand):
+		self.card_counts = Counter([newHand])
+		self.cards = set(self.card_counts.keys())
 
 	def has_tron(self):
 		check = [0] * 4
@@ -69,6 +77,9 @@ class Hand:
 		if isinstance(cards, str):
 			return float(self.card_counts[cards])
 		return float(sum([self.card_counts[card] for card in cards]))
+
+	def handsize(self):
+		return self.size
 
 	def expect(self,cards,size = 7):
 		if isinstance(cards, str):
