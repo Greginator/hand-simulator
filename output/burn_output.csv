@@ -1,0 +1,16 @@
+500000 iterations
+
+Probabilities of good hands:
+4,5,6,7,
+0.461248,0.634034,0.675274,0.691646,
+
+hand sizes/types,twolandCreature,goodhand,keepable,
+7,0.238732,0.452914,0.0,
+6,0.21986,0.33229,0.123124,
+5,0.174898,0.303244,0.155892,
+4,0.111584,0.176354,0.17331,
+
+p of good hand by 5
+0.963178
+p of good hand by 3
+0.980086
