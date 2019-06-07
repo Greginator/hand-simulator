@@ -6,7 +6,7 @@ class AmuletMullTester(MulliganTester):
 
     hand_types = ["#TheNutz", "stirNutz", "double amulet", "t3/4 titan", "solid keep"]
     hand = Hand("decklists/amulet.txt")
-    output_file = "output/amulet_output___test.csv"
+    output_file_header = "amulet"
 
     def __init__(self):
         MulliganTester.__init__(self)
@@ -20,11 +20,6 @@ class AmuletMullTester(MulliganTester):
         self.the_fat = ["Hive Mind", "Primeval Titan", "Walking Ballista", "Pact of Negation", "Summoner's Pact"]
         self.stir = ["Ancient Stirrings"]
         self.relic = ["Coalition Relic"]
-
-    def run(self):
-        self.iterations = 1000
-        self.runParis()
-        self.printResults()
 
     def CheckHand(self):
         #print("")

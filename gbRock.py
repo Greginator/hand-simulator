@@ -5,7 +5,7 @@ from mulliganTester import MulliganTester
 class RockMullTester(MulliganTester):
     hand_types = ["theNutz","good_mix","landsAndSpells"]
     hand = Hand("decklists/gbRock.txt")
-    output_file = "output/gbRock_output___test.csv"
+    output_file_header = "gbRock"
 
     def __init__(self):
         MulliganTester.__init__(self)
@@ -17,11 +17,6 @@ class RockMullTester(MulliganTester):
         self.earlyThreat = ["Dark Confidant", "Tarmogoyf", "Scavenging Ooze"]
         self.interaction = ["Thoughtseize", "Inquisition of Kozilek", "Fatal Push"]
         self.lili = ["Liliana of the Veil"]
-
-    def run(self):
-        self.iterations = 1000
-        self.runParis()
-        self.printResults()
 
     def CheckHand(self):
         #print("")

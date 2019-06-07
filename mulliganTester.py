@@ -3,14 +3,14 @@ import numpy as np
 
 class MulliganTester(ABC):
     def __init__(self):
-        self.iterations = 500000
+        self.iterations = 1000
         self.starting_size = 7
         self.mullto = 5
         self.resetCounters()
 
     @property
     @abstractmethod
-    def output_file(self):
+    def output_file_header(self):
         pass
 
     @property
@@ -27,12 +27,23 @@ class MulliganTester(ABC):
     def CheckHand(self):
         pass
 
+    def run(self):
+        self.runLondon()
+        self.printResults("London")
+        self.runParis()
+        self.printResults("Paris")
+        self.runVancouver()
+        self.printResults("Vancouver")
+
     def resetCounters(self):
         self.success = 0.0
-        self.early_success = 0.0
+        self.improvement_after_draw = [0] * (self.starting_size - self.mullto +1)
         self.good_counts = np.zeros((self.starting_size + 1) - self.mullto)
         self.hand_counts = np.zeros(((self.starting_size + 1) - self.mullto, len(self.hand_types)))
         self.totals = np.zeros((self.starting_size + 1) - self.mullto)
+
+        self.good_counts_afterdraw = np.zeros((self.starting_size + 1) - self.mullto)
+        self.hand_counts_afterdraw = np.zeros(((self.starting_size + 1) - self.mullto, len(self.hand_types)))
 
     def runParis(self):
         self.resetCounters()
@@ -41,22 +52,30 @@ class MulliganTester(ABC):
                 print(str(i) + " of " + str(self.iterations))
 
             flag = False
-            early_flag = False
+            improvedAfterDraw = False
             for j in range(0,(self.starting_size + 1) - self.mullto):
                 self.hand.new_hand(self.starting_size - j)
 
                 results = self.CheckHand()
                 
+                self.hand.draw_card()
+                resultAfterDraw = self.CheckHand()
+
+                improvedAfterDraw = self.checkImprovement(results, resultAfterDraw)
+
                 self.good_counts[self.starting_size - j - self.mullto] += (np.sum(results) > 0)
                 self.hand_counts[self.starting_size - j - self.mullto,:] += results
+
+                self.good_counts_afterdraw[self.starting_size - j - self.mullto] += (np.sum(resultAfterDraw) > 0)
+                self.hand_counts_afterdraw[self.starting_size - j - self.mullto,:] += resultAfterDraw
+
                 self.totals[self.starting_size - j - self.mullto] += 1
                 if not flag:
+                    self.improvement_after_draw[j] += improvedAfterDraw
                     if (np.sum(results) > 0):
                         flag = True
-                        if(j <= 2):
-                            early_flag = True
+
             self.success += flag
-            self.early_success += early_flag
 
     def getBestResult(self, results):
         best = None
@@ -82,7 +101,7 @@ class MulliganTester(ABC):
             if i % 5000 == 0:
                 print(str(i) + " of " + str(self.iterations))
             flag = False
-            early_flag = False
+            improvedAfterDraw = False
             for j in range(0,(self.starting_size + 1) - self.mullto):
                 self.hand.new_hand(self.starting_size)
                 if j > 0:
@@ -94,17 +113,25 @@ class MulliganTester(ABC):
                     results = self.getBestResult(subResults)
                 else:
                     results = self.CheckHand()
-                
+
+                self.hand.draw_card()
+                resultAfterDraw = self.CheckHand()
+
+                improvedAfterDraw = self.checkImprovement(results, resultAfterDraw)
+
                 self.good_counts[self.starting_size - j - self.mullto] += (np.sum(results) > 0)
                 self.hand_counts[self.starting_size - j - self.mullto,:] += results
+
+                self.good_counts_afterdraw[self.starting_size - j - self.mullto] += (np.sum(resultAfterDraw) > 0)
+                self.hand_counts_afterdraw[self.starting_size - j - self.mullto,:] += resultAfterDraw
+
                 self.totals[self.starting_size - j - self.mullto] += 1
                 if not flag:
+                    self.improvement_after_draw[j] += improvedAfterDraw
                     if (np.sum(results) > 0):
                         flag = True
-                        if(j <= 2):
-                            early_flag = True
+
             self.success += flag
-            self.early_success += early_flag
 
     def runVancouver(self):
         self.resetCounters()
@@ -113,65 +140,93 @@ class MulliganTester(ABC):
                 print(str(i) + " of " + str(self.iterations))
 
             flag = False
-            early_flag = False
             for j in range(0,(self.starting_size + 1) - self.mullto):
                 self.hand.new_hand(self.starting_size - j)
 
                 results = self.CheckHand()
+
+                self.hand.draw_card()
+                resultAfterDraw = self.CheckHand()
+
+                improvedAfterDraw = self.checkImprovement(results, resultAfterDraw)
+                if not improvedAfterDraw:
+                    #Replace the card drawn in the last operation
+                    self.hand.scry_bottom()
+                    resultAfterDraw = self.CheckHand()
+                    improvedAfterDraw = self.checkImprovement(results, resultAfterDraw)
                 
                 self.good_counts[self.starting_size - j - self.mullto] += (np.sum(results) > 0)
                 self.hand_counts[self.starting_size - j - self.mullto,:] += results
+
+                self.good_counts_afterdraw[self.starting_size - j - self.mullto] += (np.sum(resultAfterDraw) > 0)
+                self.hand_counts_afterdraw[self.starting_size - j - self.mullto,:] += resultAfterDraw
+
                 self.totals[self.starting_size - j - self.mullto] += 1
                 if not flag:
+                    self.improvement_after_draw[j] += improvedAfterDraw
                     if (np.sum(results) > 0):
                         flag = True
-                        if(j <= 2):
-                            early_flag = True
+
             self.success += flag
-            self.early_success += early_flag
 
-    def output_results(self, p_good, p_hands, p_early_success, p_success, header):
-        with open(self.output_file,"w") as file:
-            file.write(header)
-            file.write(str(self.iterations) + " iterations\n\n")
-
-            file.write("Probabilities of good hands:\n")
-            for size in range(self.mullto,8):
-                file.write(str(size) + ",")
-            file.write("\n")
-            for p in p_good:
-                file.write(str(p) + ",")
-            file.write("\n\n")
-
-            # hand type headers
-            file.write("hand sizes/types,")
-            for type in self.hand_types:
-                file.write(str(type) + ",")
-
-            #results
-            file.write("\n")
-            for size in reversed(range(len(p_hands))):
-                file.write(str(size + self.mullto) + ",")
-                for p in p_hands[size,:]:
-                    file.write(str(p) + ",")
-                file.write("\n")
-
-            file.write("\n")
-            file.write("p of good hand by 5\n")
-            file.write(str(p_early_success) + "\n")
-            file.write("p of good hand by 3\n")
-            file.write(str(p_success) + "\n")
-            file.close()
+    def checkImprovement(self, resultBeforeDraw, resultAfterDraw):
+        if True in resultAfterDraw:
+            bestNewRating = np.argmax(resultAfterDraw)
+            bestOldRating = np.argmax(resultBeforeDraw)
+            return bestNewRating < bestOldRating
+        else:
+            return False
 
     def printResults(self, header):
         p_good = self.good_counts / self.totals
         p_hands = self.hand_counts / self.totals.reshape((self.starting_size + 1) - self.mullto,1)
-        p_early_success = self.early_success / self.iterations
         p_success = self.success / self.iterations
+        p_drawImprovement = [x / self.iterations for x in self.improvement_after_draw]
 
-        self.output_results(p_good, p_hands, p_early_success, p_success, header)
+        p_goodAfterDraw = self.good_counts_afterdraw / self.totals
+        p_hands_afterDraw = self.hand_counts_afterdraw / self.totals.reshape((self.starting_size + 1) - self.mullto,1)
 
         print(p_good)
         print(np.flip(p_hands, axis = 0))
-        print(p_early_success)
+        print(p_drawImprovement)
         print(p_success)
+
+        filename = "output/" + self.output_file_header + "_" + header+".csv"
+        with open(filename, "w") as file:
+            file.write(header + " - ")
+            file.write(str(self.iterations) + " iterations\n\n")
+
+            self.writeHandTypesToFile(file, p_good, p_hands)
+
+            file.write("\n\nAfter Draw""\n")
+            self.writeHandTypesToFile(file, p_goodAfterDraw, p_hands_afterDraw)
+
+            file.write("\n")
+            file.write("p of good hand by 5\n")
+            file.write(str(p_success) + "\n")
+            file.write("p of improvement after draw\n")
+            file.write(str(p_drawImprovement) + "\n")
+            file.close()
+
+
+    def writeHandTypesToFile(self, file, p_good, p_hands):
+        file.write("Probabilities of good hands:\n")
+        for size in range(self.mullto,8):
+            file.write(str(size) + ",")
+        file.write("\n")
+        for p in p_good:
+            file.write(str(p) + ",")
+        file.write("\n\n")
+
+        # hand type headers
+        file.write("hand sizes/types,")
+        for type in self.hand_types:
+            file.write(str(type) + ",")
+
+        #results
+        file.write("\n")
+        for size in reversed(range(len(p_hands))):
+            file.write(str(size + self.mullto) + ",")
+            for p in p_hands[size,:]:
+                file.write(str(p) + ",")
+            file.write("\n")

@@ -6,7 +6,7 @@ class KarnTronMullTester(MulliganTester):
 
     hand_types = ["T3KarnGG", "Tron+payoff", "Tron", "solid_keep"]
     hand = Hand("decklists/karn_tron.txt")
-    output_file = "output/karntron_output___test.csv"
+    output_file_header = "karntron"
 
     def __init__(self):
         MulliganTester.__init__(self)
@@ -21,11 +21,6 @@ class KarnTronMullTester(MulliganTester):
         self.karn = ["Karn Liberated"]
         self.lands = ["Wastes", "Forest", "Urza's Power Plant", "Urza's Tower", "Urza's Mine"]
         self.cantrips = ["Chromatic Sphere", "Chromatic Star", "Relic of Progenitus"]
-
-    def run(self):
-        self.iterations = 1000
-        self.runParis()
-        self.printResults()
 
     def CheckHand(self):
         #print("")

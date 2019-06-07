@@ -5,6 +5,7 @@ import scipy.stats as sps
 
 class Hand:
     def __init__(self, deck_name):
+        self.deck_name = deck_name
         if deck_name:
             self.deck, self.decklist = self.process(deck_name)
         else:
@@ -74,10 +75,27 @@ class Hand:
         self.subsetIndex = -1
         self.size = self.size - numHide
 
+    def scry_bottom(self):
+        self.card_counts[self.lastDraw] += -1
+        self.draw_card()
+        self.size += -1 #Set size after so we don't redraw this card
+
+    def draw_card(self):
+        choice = np.random.choice(len(self.deck) - self.size, 1)[0]
+
+        if choice in self.draws:
+            choice = len(self.deck) - len(self.draws) + np.where(self.draws==choice)[0][0]
+
+        self.lastDraw = self.deck[choice]
+        self.card_counts[self.lastDraw] += 1
+        self.draws = np.append(self.draws, choice)
+        self.cards = set(self.card_counts.keys())
+        self.size += 1
+
     def new_hand(self, size=7):
         self.size = size
-        draws = np.random.choice(len(self.deck), size, replace=False)
-        self.card_counts = Counter([self.deck[i] for i in draws])
+        self.draws = np.random.choice(len(self.deck), size, replace=False)
+        self.card_counts = Counter([self.deck[i] for i in self.draws])
         self.cards = set(self.card_counts.keys())
         return self.card_counts.copy()
 

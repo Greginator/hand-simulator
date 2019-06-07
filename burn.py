@@ -6,18 +6,13 @@ class BurnMullTester(MulliganTester):
 
     hand_types = ["twolandCreature","goodhand","keepable"]
     hand = Hand("decklists/burn.txt")
-    output_file = "output/burn_output___test.csv"
+    output_file_header = "burn"
     
     def __init__(self):
         MulliganTester.__init__(self)
         self.rwSources = ["Bloodstained Mire", "Inspiring Vantage", "Sacred Foundry", "Scalding Tarn", "Wooded Foothills"]
         self.mountain = ["Mountain"]
         self.oneDropC = ["Goblin Guide", "Grim Lavamancer", "Monastery Swiftspear"]
-
-    def run(self):
-        self.iterations = 1000
-        self.runParis()
-        self.printResults()
 
     def CheckHand(self):
         #print("")

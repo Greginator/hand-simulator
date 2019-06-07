@@ -5,16 +5,11 @@ from mulliganTester import MulliganTester
 class ETronMullTester(MulliganTester):
     hand_types = ["Tron", "Chalice + 2 Lands", "t3 TKS", "t2 Reshaper", "2 Temples + Spell"]
     hand = Hand("decklists/e_tron.txt")
-    output_file = "output/etron_output__test.csv"
+    output_file_header = "etron"
 
     def __init__(self):
         MulliganTester.__init__(self)
         self.land_names = ["Cavern of Souls", "Sea Gate Wreckage", "Wastes", "Eldrazi Temple", "Urza's Mine", "Urza's Power Plant", "Urza's Tower", "Ghost Quarter"]
-
-    def run(self):
-        self.iterations = 1000
-        self.runParis()
-        self.printResults()
 
     def CheckHand(self):
         hand = self.hand
