@@ -36,7 +36,10 @@ class LimitedMullTester(MulliganTester):
         if self.hand.handsize() - numLands >= 4 and bothColours and numTwoDrop > 0 and numEarlyPlay > 1:
             PerfectCurve = True
         elif self.hand.handsize() - numLands >= 3 and bothColours and self.playByThree:
-            GoodCurve = True
+            if numLands == 2 and numTwoDrop == 0:
+                keepable = True
+            else:
+                GoodCurve = True
         elif self.hand.handsize() - numLands >= 2 and self.playByThree and ((numPrimaryLand > 0 and numCheapPrimary > 0) or (numSecondaryland > 0 and numCheapSecondary > 0)) :
             keepable = True
 
