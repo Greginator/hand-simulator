@@ -1,0 +1,48 @@
+Paris - 100 iterations
+
+Probabilities of good hands:
+5,6,7,
+0.18,0.37,0.57,
+
+hand sizes/types,PerfectCurve,GoodCurve,keepable,
+7,0.35,0.0,0.22,
+6,0.12,0.0,0.25,
+5,0.0,0.0,0.18,
+
+
+After Draw
+Probabilities of good hands:
+5,6,7,
+0.39,0.47,0.79,
+
+hand sizes/types,PerfectCurve,GoodCurve,keepable,
+7,0.56,0.0,0.23,
+6,0.28,0.0,0.19,
+5,0.17,0.0,0.22,
+
+
+After Draw & Thoughtseize
+Probabilities of good hands:
+5,6,7,
+0.23076923076923078,0.5957446808510638,0.6075949367088608,
+
+hand sizes/types,PerfectCurve,GoodCurve,keepable,
+7,0.7088607594936709,0.0,0.2911392405063291,
+6,0.5957446808510638,0.0,0.40425531914893614,
+5,0.4358974358974359,0.0,0.5641025641025641,
+
+p of good hand by 5
+0.75
+p of improvement after draw
+7,6,5
+[0.05, 0.04, 0.06]
+p of good hand after draw
+0.89
+
+Thoughtseize Probabilities
+7,6,5,Hurt Keepable Hand
+[0.31, 0.19, 0.3]
+Broke Keepable Hand
+[0.31, 0.19, 0.3]
+Broke Kept hand
+0.24

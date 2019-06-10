@@ -1,0 +1,48 @@
+Vancouver - 100 iterations
+
+Probabilities of good hands:
+5,6,7,
+0.22,0.35,0.54,
+
+hand sizes/types,PerfectCurve,GoodCurve,keepable,
+7,0.32,0.0,0.22,
+6,0.11,0.0,0.24,
+5,0.0,0.0,0.22,
+
+
+After Draw
+Probabilities of good hands:
+5,6,7,
+0.51,0.53,0.75,
+
+hand sizes/types,PerfectCurve,GoodCurve,keepable,
+7,0.53,0.0,0.22,
+6,0.35,0.0,0.18,
+5,0.19,0.0,0.32,
+
+
+After Draw & Thoughtseize
+Probabilities of good hands:
+5,6,7,
+0.19607843137254902,0.5471698113207547,0.52,
+
+hand sizes/types,PerfectCurve,GoodCurve,keepable,
+7,0.7066666666666667,0.0,0.29333333333333333,
+6,0.660377358490566,0.0,0.33962264150943394,
+5,0.37254901960784315,0.0,0.6274509803921569,
+
+p of good hand by 5
+0.75
+p of improvement after draw
+7,6,5
+[0.04, 0.06, 0.1]
+p of good hand after draw
+0.95
+
+Thoughtseize Probabilities
+7,6,5,Hurt Keepable Hand
+[0.36, 0.24, 0.41]
+Broke Keepable Hand
+[0.36, 0.24, 0.41]
+Broke Kept hand
+0.3333333333333333

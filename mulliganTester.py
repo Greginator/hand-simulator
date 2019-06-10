@@ -3,7 +3,7 @@ import numpy as np
 
 class MulliganTester(ABC):
     def __init__(self):
-        self.iterations = 100
+        self.iterations = 100000
         self.starting_size = 7
         self.mullto = 5
         self.resetCounters()
@@ -184,8 +184,11 @@ class MulliganTester(ABC):
             if i % 5000 == 0:
                 print(str(i) + " of " + str(self.iterations))
             foundKeeper = False
+            tsBrokeKeeper = False
             keeperAfterDraw = False
+
             for j in range(0,(self.starting_size + 1) - self.mullto):
+                size = self.starting_size - j
                 self.hand.new_hand(self.starting_size)
                 if j > 0:
                     subResults = []
@@ -199,24 +202,42 @@ class MulliganTester(ABC):
                 else:
                     results = self.CheckHand()
 
+                self.good_counts[size - self.mullto] += (np.sum(results) > 0)
+                self.hand_counts[size - self.mullto,:] += results
+
                 self.hand.draw_card()
                 resultAfterDraw = self.CheckHand()
 
                 improvedAfterDraw = self.checkImprovement(results, resultAfterDraw)
 
-                self.good_counts[self.starting_size - j - self.mullto] += (np.sum(results) > 0)
-                self.hand_counts[self.starting_size - j - self.mullto,:] += results
-
-                self.good_counts_afterdraw[self.starting_size - j - self.mullto] += (np.sum(resultAfterDraw) > 0)
-                self.hand_counts_afterdraw[self.starting_size - j - self.mullto,:] += resultAfterDraw
-
-                self.totals[self.starting_size - j - self.mullto] += 1
+                self.good_counts_afterdraw[size - self.mullto] += (np.sum(resultAfterDraw) > 0)
+                self.hand_counts_afterdraw[size - self.mullto,:] += resultAfterDraw
                 self.improvement_after_draw[j] += improvedAfterDraw
+                
+                if np.sum(resultAfterDraw) > 0:
+                    self.thoughtseizedHand()
+                    resultAfterTS = self.CheckHand()
+                    if np.sum(resultAfterTS) == 0:
+                        self.ts_broke_hand[j] += 1
+                        self.ts_hurt_hand[j] += 1
+                    else:
+                        tsHurtHand = self.checkDamageDone(results, resultAfterTS)
+                        self.ts_hurt_hand[j] += 1 if tsHurtHand else 0
+
+                    self.good_counts_afterTSDraw[size - self.mullto] += (np.sum(resultAfterTS) > 0)
+                    self.hand_counts_afterTSDraw[size - self.mullto,:] += resultAfterDraw
+                    self.ts_totals[size - self.mullto] += 1
+
+                self.totals[size - self.mullto] += 1
+                
                 if not foundKeeper and np.sum(results) > 0:
                     foundKeeper = True
+                    if np.sum(resultAfterTS) == 0:
+                        tsBrokeKeeper = True
                 if not keeperAfterDraw and np.sum(resultAfterDraw) > 0:
                     keeperAfterDraw = True
             self.successAfterDraw += keeperAfterDraw
+            self.tsBreaksKeeper += tsBrokeKeeper
             self.success += foundKeeper
 
     def runVancouver(self):
@@ -226,11 +247,16 @@ class MulliganTester(ABC):
                 print(str(i) + " of " + str(self.iterations))
 
             foundKeeper = False
+            tsBrokeKeeper = False
             keeperAfterDraw = False
             for j in range(0,(self.starting_size + 1) - self.mullto):
-                self.hand.new_hand(self.starting_size - j)
+                size = self.starting_size - j
+                self.hand.new_hand(size)
 
                 results = self.CheckHand()
+
+                self.good_counts[size - self.mullto] += (np.sum(results) > 0)
+                self.hand_counts[size- self.mullto,:] += results
 
                 self.hand.draw_card()
                 resultAfterDraw = self.CheckHand()
@@ -241,20 +267,35 @@ class MulliganTester(ABC):
                     self.hand.scry_bottom()
                     resultAfterDraw = self.CheckHand()
                     improvedAfterDraw = self.checkImprovement(results, resultAfterDraw)
-                
-                self.good_counts[self.starting_size - j - self.mullto] += (np.sum(results) > 0)
-                self.hand_counts[self.starting_size - j - self.mullto,:] += results
 
-                self.good_counts_afterdraw[self.starting_size - j - self.mullto] += (np.sum(resultAfterDraw) > 0)
-                self.hand_counts_afterdraw[self.starting_size - j - self.mullto,:] += resultAfterDraw
-
-                self.totals[self.starting_size - j - self.mullto] += 1
+                self.good_counts_afterdraw[size- self.mullto] += (np.sum(resultAfterDraw) > 0)
+                self.hand_counts_afterdraw[size - self.mullto,:] += resultAfterDraw
                 self.improvement_after_draw[j] += improvedAfterDraw
+                
+                if np.sum(resultAfterDraw) > 0:
+                    self.thoughtseizedHand()
+                    resultAfterTS = self.CheckHand()
+                    if np.sum(resultAfterTS) == 0:
+                        self.ts_broke_hand[j] += 1
+                        self.ts_hurt_hand[j] += 1
+                    else:
+                        tsHurtHand = self.checkDamageDone(results, resultAfterTS)
+                        self.ts_hurt_hand[j] += 1 if tsHurtHand else 0
+
+                    self.good_counts_afterTSDraw[size - self.mullto] += (np.sum(resultAfterTS) > 0)
+                    self.hand_counts_afterTSDraw[size - self.mullto,:] += resultAfterDraw
+                    self.ts_totals[size - self.mullto] += 1
+
+                self.totals[size - self.mullto] += 1
+                
                 if not foundKeeper and np.sum(results) > 0:
                     foundKeeper = True
+                    if np.sum(resultAfterTS) == 0:
+                        tsBrokeKeeper = True
                 if not keeperAfterDraw and np.sum(resultAfterDraw) > 0:
                     keeperAfterDraw = True
             self.successAfterDraw += keeperAfterDraw
+            self.tsBreaksKeeper += tsBrokeKeeper
             self.success += foundKeeper
 
     def checkImprovement(self, resultBeforeDraw, resultAfterDraw):
