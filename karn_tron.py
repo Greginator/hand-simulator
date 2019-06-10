@@ -7,6 +7,7 @@ class KarnTronMullTester(MulliganTester):
     hand_types = ["T3KarnGG", "Tron+payoff", "Tron", "solid_keep"]
     hand = Hand("decklists/karn_tron.txt")
     output_file_header = "karntron"
+    land_value_list = ["Wastes", "Forest", "Urza's Power Plant", "Urza's Tower", "Urza's Mine"]
 
     def __init__(self):
         MulliganTester.__init__(self)
@@ -19,7 +20,6 @@ class KarnTronMullTester(MulliganTester):
         self.exmap = ["Expedition Map"]
         self.payoff = ["Walking Ballista", "Karn Liberated", "Wurmcoil Engine", "Ugin, the Spirit Dragon"]
         self.karn = ["Karn Liberated"]
-        self.lands = ["Wastes", "Forest", "Urza's Power Plant", "Urza's Tower", "Urza's Mine"]
         self.cantrips = ["Chromatic Sphere", "Chromatic Star", "Relic of Progenitus"]
         self.ostone = ["Oblivion Stone"]
 
@@ -35,7 +35,7 @@ class KarnTronMullTester(MulliganTester):
         numPayoff = hand.count_of(self.payoff)
         hasKarn = hand.contains(self.karn)
         tronFinders = hand.count_of(self.exmap) + hand.count_of(self.sylv) if hasGreen else 0
-        numLand = hand.count_of(self.lands)
+        numLand = hand.count_of(self.land_value_list)
         numCantrips = hand.count_of(self.cantrips) + numStir
         hasOStone = hand.contains(self.ostone)
 

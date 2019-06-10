@@ -7,6 +7,7 @@ class LimitedMullTester(MulliganTester):
     hand_types = ["PerfectCurve", "GoodCurve","keepable"]
     hand = Hand("decklists/limited.txt")
     output_file_header = "limited"
+    land_value_list = ["primaryland", "secondaryland"]
     
     def __init__(self):
         MulliganTester.__init__(self)

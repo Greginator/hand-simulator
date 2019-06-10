@@ -53,7 +53,10 @@ class Hand:
 
     def chooseSubset(self, index):
         self.subsetIndex = index
-        self.card_counts = Counter(self.subsetHands[self.subsetIndex])
+        if index is None:
+            self.card_counts = self.origHand
+        else:
+            self.card_counts = Counter(self.subsetHands[self.subsetIndex])
         self.cards = set(self.card_counts.keys())
 
     def nextSubset(self):
@@ -61,16 +64,21 @@ class Hand:
         self.card_counts = Counter(self.subsetHands[self.subsetIndex])
         self.cards = set(self.card_counts.keys())
 
-    def generate_subset_hands(self, numHide):
+    def generate_subset_hands(self, numHide, noRemoveList = []):
         if numHide > 2:
             raise Exception('not implemented for more than 2')
-
+        self.origHand = self.card_counts.copy()
         counterAsList = sorted(self.card_counts.elements())
         self.subsetHands = []
         for i in range(0, self.size):
+            if counterAsList[i] in noRemoveList:
+                continue
+
             subHand = counterAsList[:i] + counterAsList[i+1:]
             if numHide > 1:
                 for j in range(i, self.size-1):
+                    if counterAsList[i] in noRemoveList:
+                        continue
                     subHand = counterAsList[:j] + counterAsList[j+1:]
                     self.subsetHands.append(subHand)
             else:

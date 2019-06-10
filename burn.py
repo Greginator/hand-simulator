@@ -7,6 +7,7 @@ class BurnMullTester(MulliganTester):
     hand_types = ["twolandCreature","goodhand","keepable"]
     hand = Hand("decklists/burn.txt")
     output_file_header = "burn"
+    land_value_list = ["Mountain", "Bloodstained Mire", "Inspiring Vantage", "Sacred Foundry", "Scalding Tarn", "Wooded Foothills"]
     
     def __init__(self):
         MulliganTester.__init__(self)

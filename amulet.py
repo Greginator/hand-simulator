@@ -7,6 +7,7 @@ class AmuletMullTester(MulliganTester):
     hand_types = ["#TheNutz", "stirNutz", "double amulet", "t3/4 titan", "solid keep"]
     hand = Hand("decklists/amulet.txt")
     output_file_header = "amulet"
+    land_value_list = ["Boros Garrison", "Selesnya Sanctuary", "Simic Growth Chamber", "Vesuva", "Forest", "Bojuka Bog", "Botanical Sanctum", "Cavern of Souls", "Gemstone Mine", "Kabira Crossroads", "Khalni Garden", "Slayers' Stronghold", "Sunhome, Fortress of the Legion", "Tolaria West"]
 
     def __init__(self):
         MulliganTester.__init__(self)

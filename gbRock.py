@@ -6,6 +6,7 @@ class RockMullTester(MulliganTester):
     hand_types = ["theNutz","good_mix","landsAndSpells"]
     hand = Hand("decklists/gbRock.txt")
     output_file_header = "gbRock"
+    land_value_list = ["Field of Ruin", "Forest", "Treetop Village", "Swamp", "Blooming Marsh", "Overgrown Tomb", "Verdant Catacombs", "Twilight Mire", "Hissing Quagmire"]
 
     def __init__(self):
         MulliganTester.__init__(self)
