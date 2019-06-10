@@ -82,21 +82,27 @@ class MulliganTester(ABC):
 
     def getBestResult(self, results):
         best = None
-        bestIndex = None
+        bestHandIndex = None
+        handIndex = None
+        i = 0
         for res in results:
             if True in res:
                 if best is None:
                     best = res
-                    bestIndex = np.argmax(best)
-                    if bestIndex == 0:
+                    bestHandIndex = np.argmax(best)
+                    handIndex = i
+                    if bestHandIndex == 0:
                         break
                 else:
                     testIndex = np.argmax(res)
-                    if testIndex < bestIndex:
+                    if testIndex < bestHandIndex:
                         best = res
+                        handIndex = i
+            i += 1
         if best is None:
             best = results[0]
-        return best
+            handIndex = 0
+        return handIndex
 
     def runLondon(self):
         self.resetCounters()
@@ -113,7 +119,9 @@ class MulliganTester(ABC):
                     for k in range(0, self.hand.num_subsets):
                         self.hand.nextSubset()
                         subResults.append(self.CheckHand())
-                    results = self.getBestResult(subResults)
+                    bestIndex = self.getBestResult(subResults)
+                    self.hand.chooseSubset(bestIndex)
+                    results = subResults[bestIndex]
                 else:
                     results = self.CheckHand()
 

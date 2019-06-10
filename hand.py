@@ -51,6 +51,11 @@ class Hand:
     def num_subets(self):
         return self.num_subsets
 
+    def chooseSubset(self, index):
+        self.subsetIndex = index
+        self.card_counts = Counter(self.subsetHands[self.subsetIndex])
+        self.cards = set(self.card_counts.keys())
+
     def nextSubset(self):
         self.subsetIndex += 1
         self.card_counts = Counter(self.subsetHands[self.subsetIndex])
