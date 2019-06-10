@@ -97,6 +97,7 @@ class MulliganTester(ABC):
                     testIndex = np.argmax(res)
                     if testIndex < bestHandIndex:
                         best = res
+                        bestHandIndex = testIndex
                         handIndex = i
             i += 1
         if best is None:
