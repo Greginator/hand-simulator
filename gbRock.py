@@ -20,9 +20,6 @@ class RockMullTester(MulliganTester):
         self.lili = ["Liliana of the Veil"]
 
     def CheckHand(self):
-        #print("")
-        #print (hand.hand_as_str())
-
         hand = self.hand
 
         numLands = hand.count_of(self.multiSources) + hand.count_of(self.blackSource) + hand.count_of(self.greenSource) + hand.count_of(self.otherLand)
@@ -32,6 +29,8 @@ class RockMullTester(MulliganTester):
         numInteraction = hand.count_of(self.interaction)
         hasLili = hand.contains(self.lili)
 
+        numSpells = hand.handsize() - numLands
+
         theNutz = False
         good_mix = False
         landsAndSpells = False
@@ -40,15 +39,15 @@ class RockMullTester(MulliganTester):
             if numEarlyThreat >= 1 and numInteraction >= 1:
                 if hasLili:
                     theNutz = True
-                elif hand.handsize() - numLands >= 4:
+                elif numSpells >= 4:
                     good_mix = True
                 else:
                     landsAndSpells = True
-            elif hand.handsize() - numLands >= 3:
+            elif numSpells >= 3:
                 landsAndSpells = True
 
         results = np.array([theNutz, good_mix, landsAndSpells])
-        #print(str (results))
+
         return results
 
 if __name__ == "__main__":

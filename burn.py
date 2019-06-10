@@ -16,9 +16,6 @@ class BurnMullTester(MulliganTester):
         self.oneDropC = ["Goblin Guide", "Grim Lavamancer", "Monastery Swiftspear"]
 
     def CheckHand(self):
-        #print("")
-        #print (hand.hand_as_str())
-
         numRW = self.hand.count_of(self.rwSources)
         numLands = numRW + self.hand.count_of(self.mountain)
         numEarlyThreat = self.hand.count_of(self.oneDropC)
@@ -27,17 +24,19 @@ class BurnMullTester(MulliganTester):
         goodhand = False
         keepable = False
 
-        if self.hand.handsize() - numLands >= 5 and numRW >= 1 and numEarlyThreat >= 1:
+        numSpells = self.hand.handsize() - numLands
+
+        if numSpells >= 5 and numRW >= 1 and numEarlyThreat >= 1:
             twolandCreature = True
-        elif numLands > 1 and self.hand.handsize() - numLands >= 4:
+        elif numLands > 1 and (numSpells >= 4 or (numSpells >= 3 and numEarlyThreat > 0)):
             goodhand = True
-        elif numLands > 1 and self.hand.handsize() - numLands >= 3:
+        elif numLands > 1 and numSpells >= 3:
             keepable = True
         elif numLands == 1 and numEarlyThreat > 1:
             keepable = True
 
         results = np.array([twolandCreature, goodhand, keepable])
-        #print(str (results))
+
         return results
 
 if __name__ == "__main__":
