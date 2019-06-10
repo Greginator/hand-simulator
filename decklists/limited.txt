@@ -1,0 +1,10 @@
+5 primary12cc
+3 secondary12cc
+4 primary3cc
+4 secondary3cc
+2 primary4cc
+1 secondary4cc
+4 fiveplus
+9 primaryland
+8 secondaryland
+
