@@ -39,11 +39,11 @@ class RockMullTester(MulliganTester):
             if numEarlyThreat >= 1 and numInteraction >= 1:
                 if hasLili:
                     theNutz = True
-                elif numLands/hand.handsize() <= .5:
+                elif hand.handsize() - numLands >= 4:
                     good_mix = True
-                elif numLands/hand.handsize() <= .6:
+                else:
                     landsAndSpells = True
-            elif numLands/hand.handsize() <= .5:
+            elif hand.handsize() - numLands >= 3:
                 landsAndSpells = True
 
         results = np.array([theNutz, good_mix, landsAndSpells])

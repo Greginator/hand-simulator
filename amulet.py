@@ -64,7 +64,7 @@ class AmuletMullTester(MulliganTester):
             double_amulet = True
         elif num_ramp_dudes > 0 and num_payoff > 0 and has_6_mana:
             is_t4_titan = True
-        elif num_reg_land > 0 and num_green_source > 0 and nutz_count + num_stir >= 5 and num_high_cc < 3:
+        elif num_reg_land > 0 and num_green_source > 0 and nutz_count + num_stir >= 5 and hand.handsize() - num_high_cc > 4:
             solid_keep = True
 
         results = np.array([is_nutz, stir_nutz, double_amulet, is_t4_titan, solid_keep])

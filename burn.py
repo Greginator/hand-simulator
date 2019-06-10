@@ -26,11 +26,13 @@ class BurnMullTester(MulliganTester):
         goodhand = False
         keepable = False
 
-        if numLands == 2 and numRW >= 1 and numEarlyThreat >= 1:
+        if self.hand.handsize() - numLands >= 5 and numRW >= 1 and numEarlyThreat >= 1:
             twolandCreature = True
-        elif numLands > 1 and numLands/self.hand.handsize() <= 0.6:
+        elif numLands > 1 and self.hand.handsize() - numLands >= 4:
             goodhand = True
-        elif self.hand.handsize() < 7 and numLands == 1 and numEarlyThreat == 1:
+        elif numLands > 1 and self.hand.handsize() - numLands >= 3:
+            keepable = True
+        elif numLands == 1 and numEarlyThreat > 1:
             keepable = True
 
         results = np.array([twolandCreature, goodhand, keepable])
