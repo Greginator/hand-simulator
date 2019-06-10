@@ -1,0 +1,48 @@
+Vancouver - 100000 iterations
+
+Probabilities of good hands:
+5,6,7,
+0.16826,0.35328,0.52854,
+
+hand sizes/types,T3KarnGG,Tron+payoff,Tron,solid_keep,
+7,0.05167,0.08218,0.06711,0.32758,
+6,0.02165,0.03999,0.05582,0.23582,
+5,0.00542,0.01219,0.03715,0.1135,
+
+
+After Draw
+Probabilities of good hands:
+5,6,7,
+0.40346,0.57666,0.67289,
+
+hand sizes/types,T3KarnGG,Tron+payoff,Tron,solid_keep,
+7,0.09764,0.13182,0.06888,0.37455,
+6,0.08246,0.11238,0.06802,0.3138,
+5,0.04018,0.06093,0.06256,0.23979,
+
+
+After Draw & Thoughtseize
+Probabilities of good hands:
+5,6,7,
+0.3020125910870966,0.4667915236014289,0.6289438095379631,
+
+hand sizes/types,T3KarnGG,Tron+payoff,Tron,solid_keep,
+7,0.14510544071096315,0.19590126172182676,0.10236442806402235,0.5566288695031878,
+6,0.14299587278465647,0.1948808656747477,0.11795512086844935,0.5441681406721465,
+5,0.09958855896495315,0.15101868834580875,0.1550587418827145,0.5943340108065236,
+
+p of good hand by 5
+0.74628
+p of improvement after draw
+7,6,5
+[0.06792, 0.07878, 0.03387]
+p of good hand after draw
+0.91598
+
+Thoughtseize Probabilities
+7,6,5,Hurt Keepable Hand
+[0.25654, 0.31171, 0.28359]
+Broke Keepable Hand
+[0.24968, 0.30748, 0.28161]
+Broke Kept hand
+0.322948491182934

@@ -1,0 +1,48 @@
+London - 100000 iterations
+
+Probabilities of good hands:
+5,6,7,
+0.67649,0.85481,0.85565,
+
+hand sizes/types,twolandCreature,goodhand,keepable,
+7,0.3886,0.40296,0.06409,
+6,0.38764,0.40576,0.06141,
+5,0.0,0.40596,0.27053,
+
+
+After Draw
+Probabilities of good hands:
+5,6,7,
+0.82307,0.90857,0.91952,
+
+hand sizes/types,twolandCreature,goodhand,keepable,
+7,0.56355,0.32033,0.03564,
+6,0.50475,0.37176,0.03206,
+5,0.10854,0.62984,0.08469,
+
+
+After Draw & Thoughtseize
+Probabilities of good hands:
+5,6,7,
+0.6408689418882962,0.8944165006548752,0.9403928136419001,
+
+hand sizes/types,twolandCreature,goodhand,keepable,
+7,0.612874108230381,0.3483665390638594,0.038759352705759524,
+6,0.5555433263259848,0.4091704546705262,0.035286219003489,
+5,0.13187213724227587,0.7652326047602269,0.10289525799749717,
+
+p of good hand by 5
+0.99312
+p of improvement after draw
+7,6,5
+[0.18535, 0.12934, 0.20694]
+p of good hand after draw
+0.9987
+
+Thoughtseize Probabilities
+7,6,5,Hurt Keepable Hand
+[0.18672, 0.30218, 0.33852]
+Broke Keepable Hand
+[0.05481, 0.09593, 0.29559]
+Broke Kept hand
+0.05036652166908329

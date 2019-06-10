@@ -1,0 +1,48 @@
+Paris - 100000 iterations
+
+Probabilities of good hands:
+5,6,7,
+0.16592,0.35416,0.53502,
+
+hand sizes/types,T3KarnGG,Tron+payoff,Tron,solid_keep,
+7,0.05403,0.08251,0.06768,0.3308,
+6,0.02145,0.03912,0.05702,0.23657,
+5,0.00543,0.01177,0.03562,0.1131,
+
+
+After Draw
+Probabilities of good hands:
+5,6,7,
+0.35251,0.53191,0.67815,
+
+hand sizes/types,T3KarnGG,Tron+payoff,Tron,solid_keep,
+7,0.10028,0.13249,0.0693,0.37608,
+6,0.05264,0.08236,0.06726,0.32965,
+5,0.02127,0.04031,0.05547,0.23546,
+
+
+After Draw & Thoughtseize
+Probabilities of good hands:
+5,6,7,
+0.3450682250148932,0.5010434095993683,0.6354936223549362,
+
+hand sizes/types,T3KarnGG,Tron+payoff,Tron,solid_keep,
+7,0.1478728894787289,0.19536975595369757,0.10218978102189781,0.5545675735456758,
+6,0.09896411046981632,0.1548382245116655,0.1264499633396627,0.6197477016788554,
+5,0.06033871379535332,0.11435136591869734,0.15735723809253638,0.667952682193413,
+
+p of good hand by 5
+0.75057
+p of improvement after draw
+7,6,5
+[0.06806, 0.04364, 0.01827]
+p of good hand after draw
+0.903
+
+Thoughtseize Probabilities
+7,6,5,Hurt Keepable Hand
+[0.2545, 0.26967, 0.23247]
+Broke Keepable Hand
+[0.24719, 0.2654, 0.23087]
+Broke Kept hand
+0.31958378299159307

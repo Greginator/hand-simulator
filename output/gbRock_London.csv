@@ -1,0 +1,48 @@
+London - 100000 iterations
+
+Probabilities of good hands:
+5,6,7,
+0.59693,0.71829,0.71767,
+
+hand sizes/types,theNutz,good_mix,landsAndSpells,
+7,0.12111,0.2043,0.39226,
+6,0.12113,0.20451,0.39265,
+5,0.12173,0.0,0.4752,
+
+
+After Draw
+Probabilities of good hands:
+5,6,7,
+0.70369,0.80084,0.81844,
+
+hand sizes/types,theNutz,good_mix,landsAndSpells,
+7,0.19191,0.27877,0.34776,
+6,0.18735,0.26411,0.34938,
+5,0.18708,0.1017,0.41491,
+
+
+After Draw & Thoughtseize
+Probabilities of good hands:
+5,6,7,
+0.6653355881140843,0.8127840767194446,0.8776574947461023,
+
+hand sizes/types,theNutz,good_mix,landsAndSpells,
+7,0.23448267435609207,0.34061140706710324,0.42490591857680465,
+6,0.2339418610459018,0.3297912192198192,0.436266919734279,
+5,0.2658557035058051,0.14452386704372663,0.5896204294504682,
+
+p of good hand by 5
+0.96702
+p of improvement after draw
+7,6,5
+[0.1122, 0.10049, 0.12622]
+p of good hand after draw
+0.98895
+
+Thoughtseize Probabilities
+7,6,5,Hurt Keepable Hand
+[0.19308, 0.30036, 0.26805]
+Broke Keepable Hand
+[0.10013, 0.14993, 0.2355]
+Broke Kept hand
+0.11862215879712933

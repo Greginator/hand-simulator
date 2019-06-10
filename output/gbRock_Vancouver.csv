@@ -1,0 +1,48 @@
+Vancouver - 100000 iterations
+
+Probabilities of good hands:
+5,6,7,
+0.33341,0.56103,0.71903,
+
+hand sizes/types,theNutz,good_mix,landsAndSpells,
+7,0.12238,0.20651,0.39014,
+6,0.06045,0.10397,0.39661,
+5,0.01806,0.0,0.31535,
+
+
+After Draw
+Probabilities of good hands:
+5,6,7,
+0.5839,0.73764,0.8192,
+
+hand sizes/types,theNutz,good_mix,landsAndSpells,
+7,0.19262,0.2804,0.34618,
+6,0.15804,0.24422,0.33538,
+5,0.08402,0.143,0.35688,
+
+
+After Draw & Thoughtseize
+Probabilities of good hands:
+5,6,7,
+0.5896900154135982,0.7749173038338485,0.87965087890625,
+
+hand sizes/types,theNutz,good_mix,landsAndSpells,
+7,0.2351318359375,0.34228515625,0.4225830078125,
+6,0.21425085407515862,0.3310829130741283,0.45466623285071306,
+5,0.14389450248330193,0.2449049494776503,0.6112005480390478,
+
+p of good hand by 5
+0.91857
+p of improvement after draw
+7,6,5
+[0.11047, 0.18096, 0.14008]
+p of good hand after draw
+0.98095
+
+Thoughtseize Probabilities
+7,6,5,Hurt Keepable Hand
+[0.19253, 0.23289, 0.24609]
+Broke Keepable Hand
+[0.09859, 0.16603, 0.23958]
+Broke Kept hand
+0.10900639036763665
