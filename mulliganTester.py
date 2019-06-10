@@ -3,7 +3,7 @@ import numpy as np
 
 class MulliganTester(ABC):
     def __init__(self):
-        self.iterations = 1000
+        self.iterations = 100000
         self.starting_size = 7
         self.mullto = 5
         self.resetCounters()
@@ -37,6 +37,7 @@ class MulliganTester(ABC):
 
     def resetCounters(self):
         self.success = 0.0
+        self.successAfterDraw = 0
         self.improvement_after_draw = [0] * (self.starting_size - self.mullto +1)
         self.good_counts = np.zeros((self.starting_size + 1) - self.mullto)
         self.hand_counts = np.zeros(((self.starting_size + 1) - self.mullto, len(self.hand_types)))
@@ -51,8 +52,8 @@ class MulliganTester(ABC):
             if i % 5000 == 0:
                 print(str(i) + " of " + str(self.iterations))
 
-            flag = False
-            improvedAfterDraw = False
+            foundKeeper = False
+            keeperAfterDraw = False
             for j in range(0,(self.starting_size + 1) - self.mullto):
                 self.hand.new_hand(self.starting_size - j)
 
@@ -70,12 +71,14 @@ class MulliganTester(ABC):
                 self.hand_counts_afterdraw[self.starting_size - j - self.mullto,:] += resultAfterDraw
 
                 self.totals[self.starting_size - j - self.mullto] += 1
-                if not flag:
-                    self.improvement_after_draw[j] += improvedAfterDraw
-                    if (np.sum(results) > 0):
-                        flag = True
+                self.improvement_after_draw[j] += improvedAfterDraw
+                if not foundKeeper and np.sum(results) > 0:
+                    foundKeeper = True
+                if not keeperAfterDraw and np.sum(resultAfterDraw) > 0:
+                    keeperAfterDraw = True
+            self.successAfterDraw += keeperAfterDraw
 
-            self.success += flag
+            self.success += foundKeeper
 
     def getBestResult(self, results):
         best = None
@@ -100,8 +103,8 @@ class MulliganTester(ABC):
         for i in range(self.iterations):
             if i % 5000 == 0:
                 print(str(i) + " of " + str(self.iterations))
-            flag = False
-            improvedAfterDraw = False
+            foundKeeper = False
+            keeperAfterDraw = False
             for j in range(0,(self.starting_size + 1) - self.mullto):
                 self.hand.new_hand(self.starting_size)
                 if j > 0:
@@ -126,12 +129,13 @@ class MulliganTester(ABC):
                 self.hand_counts_afterdraw[self.starting_size - j - self.mullto,:] += resultAfterDraw
 
                 self.totals[self.starting_size - j - self.mullto] += 1
-                if not flag:
-                    self.improvement_after_draw[j] += improvedAfterDraw
-                    if (np.sum(results) > 0):
-                        flag = True
-
-            self.success += flag
+                self.improvement_after_draw[j] += improvedAfterDraw
+                if not foundKeeper and np.sum(results) > 0:
+                    foundKeeper = True
+                if not keeperAfterDraw and np.sum(resultAfterDraw) > 0:
+                    keeperAfterDraw = True
+            self.successAfterDraw += keeperAfterDraw
+            self.success += foundKeeper
 
     def runVancouver(self):
         self.resetCounters()
@@ -139,7 +143,8 @@ class MulliganTester(ABC):
             if i % 5000 == 0:
                 print(str(i) + " of " + str(self.iterations))
 
-            flag = False
+            foundKeeper = False
+            keeperAfterDraw = False
             for j in range(0,(self.starting_size + 1) - self.mullto):
                 self.hand.new_hand(self.starting_size - j)
 
@@ -149,7 +154,7 @@ class MulliganTester(ABC):
                 resultAfterDraw = self.CheckHand()
 
                 improvedAfterDraw = self.checkImprovement(results, resultAfterDraw)
-                if not improvedAfterDraw:
+                if j is not 0 and not improvedAfterDraw:
                     #Replace the card drawn in the last operation
                     self.hand.scry_bottom()
                     resultAfterDraw = self.CheckHand()
@@ -162,12 +167,13 @@ class MulliganTester(ABC):
                 self.hand_counts_afterdraw[self.starting_size - j - self.mullto,:] += resultAfterDraw
 
                 self.totals[self.starting_size - j - self.mullto] += 1
-                if not flag:
-                    self.improvement_after_draw[j] += improvedAfterDraw
-                    if (np.sum(results) > 0):
-                        flag = True
-
-            self.success += flag
+                self.improvement_after_draw[j] += improvedAfterDraw
+                if not foundKeeper and np.sum(results) > 0:
+                    foundKeeper = True
+                if not keeperAfterDraw and np.sum(resultAfterDraw) > 0:
+                    keeperAfterDraw = True
+            self.successAfterDraw += keeperAfterDraw
+            self.success += foundKeeper
 
     def checkImprovement(self, resultBeforeDraw, resultAfterDraw):
         if True in resultAfterDraw:
@@ -181,6 +187,7 @@ class MulliganTester(ABC):
         p_good = self.good_counts / self.totals
         p_hands = self.hand_counts / self.totals.reshape((self.starting_size + 1) - self.mullto,1)
         p_success = self.success / self.iterations
+        p_successAfterDraw = self.successAfterDraw / self.iterations
         p_drawImprovement = [x / self.iterations for x in self.improvement_after_draw]
 
         p_goodAfterDraw = self.good_counts_afterdraw / self.totals
@@ -205,7 +212,10 @@ class MulliganTester(ABC):
             file.write("p of good hand by 5\n")
             file.write(str(p_success) + "\n")
             file.write("p of improvement after draw\n")
+            file.write("7,6,5\n")
             file.write(str(p_drawImprovement) + "\n")
+            file.write("p of good hand after draw\n")
+            file.write(str(p_successAfterDraw) + "\n")
             file.close()
 
 
