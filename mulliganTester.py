@@ -34,10 +34,10 @@ class MulliganTester(ABC):
     def run(self):
         self.runLondon()
         self.printResults("London")
-        self.runParis()
-        self.printResults("Paris")
-        self.runVancouver()
-        self.printResults("Vancouver")
+        #self.runParis()
+        #self.printResults("Paris")
+        #self.runVancouver()
+        #self.printResults("Vancouver")
 
     def resetCounters(self):
         self.success = 0.0
@@ -48,6 +48,7 @@ class MulliganTester(ABC):
         self.hand_counts = np.zeros(((self.starting_size + 1) - self.mullto, len(self.hand_types)))
         self.totals = np.zeros((self.starting_size + 1) - self.mullto)
 
+        self.improvement_after_draw_keeper = np.zeros((self.starting_size + 1) - self.mullto)
         self.improvement_after_draw = [0] * (self.starting_size - self.mullto +1)
         self.good_counts_afterdraw = np.zeros((self.starting_size + 1) - self.mullto)
         self.hand_counts_afterdraw = np.zeros(((self.starting_size + 1) - self.mullto, len(self.hand_types)))
@@ -83,7 +84,7 @@ class MulliganTester(ABC):
                 self.good_counts_afterdraw[size - self.mullto] += (np.sum(resultAfterDraw) > 0)
                 self.hand_counts_afterdraw[size - self.mullto,:] += resultAfterDraw
                 self.improvement_after_draw[j] += improvedAfterDraw
-
+                
                 if np.sum(resultAfterDraw) > 0:
                     self.thoughtseizedHand()
                     resultAfterTS = self.CheckHand()
@@ -101,7 +102,8 @@ class MulliganTester(ABC):
 
                 self.totals[size - self.mullto] += 1
                 
-                if not foundKeeper and np.sum(results) > 0:
+                if np.sum(results) > 0:
+                    self.improvement_after_draw_keeper[j] += improvedAfterDraw
                     foundKeeper = True
                     if np.sum(resultAfterTS) == 0:
                         tsBrokeKeeper = True
@@ -174,9 +176,15 @@ class MulliganTester(ABC):
                         handIndex = i
             i += 1
         if best is None:
-            best = results[0]
-            handIndex = 0
+            handIndex = self.pickBestHandSubset()
+            if handIndex == None:
+                handIndex = 0
+            best = results[handIndex]
+            
         return handIndex
+
+    def pickBestHandSubset(self):
+        return 0
 
     def runLondon(self):
         self.resetCounters()
@@ -230,7 +238,8 @@ class MulliganTester(ABC):
 
                 self.totals[size - self.mullto] += 1
                 
-                if not foundKeeper and np.sum(results) > 0:
+                if np.sum(results) > 0:
+                    self.improvement_after_draw_keeper[j] += improvedAfterDraw
                     foundKeeper = True
                     if np.sum(resultAfterTS) == 0:
                         tsBrokeKeeper = True
@@ -288,7 +297,8 @@ class MulliganTester(ABC):
 
                 self.totals[size - self.mullto] += 1
                 
-                if not foundKeeper and np.sum(results) > 0:
+                if np.sum(results) > 0:
+                    self.improvement_after_draw_keeper[j] += improvedAfterDraw
                     foundKeeper = True
                     if np.sum(resultAfterTS) == 0:
                         tsBrokeKeeper = True

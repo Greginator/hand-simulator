@@ -58,6 +58,7 @@ class Hand:
         else:
             self.card_counts = Counter(self.subsetHands[self.subsetIndex])
         self.cards = set(self.card_counts.keys())
+        self.size = sum(self.card_counts.values())
 
     def nextSubset(self):
         self.subsetIndex += 1
@@ -79,8 +80,8 @@ class Hand:
                 for j in range(i, self.size-1):
                     if counterAsList[i] in noRemoveList:
                         continue
-                    subHand = counterAsList[:j] + counterAsList[j+1:]
-                    self.subsetHands.append(subHand)
+                    subsubHand = subHand[:j] + subHand[j+1:]
+                    self.subsetHands.append(subsubHand)
             else:
                 self.subsetHands.append(subHand)
 
@@ -113,8 +114,16 @@ class Hand:
         return self.card_counts.copy()
 
     def set_hand(self, newHand):
-        self.card_counts = Counter([newHand])
+        self.size = len(newHand)
+        self.card_counts = Counter(newHand)
         self.cards = set(self.card_counts.keys())
+
+        if self.subsetHands is not None:
+            for i in range(0, len(self.subsetHands)):
+                if self.card_counts == Counter(self.subsetHands[i]):
+                    return i
+
+        return None
 
     def has_tron(self):
         check = [0] * 4
