@@ -38,6 +38,10 @@ class MulliganTester(ABC):
         #self.printResults("Paris")
         #self.runVancouver()
         #self.printResults("Vancouver")
+        self.runParis()
+        self.printResults("Paris")
+        self.runVancouver()
+        self.printResults("Vancouver")
 
     def resetCounters(self):
         self.success = 0.0
@@ -104,9 +108,9 @@ class MulliganTester(ABC):
                 
                 if np.sum(results) > 0:
                     self.improvement_after_draw_keeper[j] += improvedAfterDraw
-                    foundKeeper = True
-                    if np.sum(resultAfterTS) == 0:
+                    if foundKeeper and np.sum(resultAfterTS) == 0:
                         tsBrokeKeeper = True
+                    foundKeeper = True
                 if not keeperAfterDraw and np.sum(resultAfterDraw) > 0:
                     keeperAfterDraw = True
             self.successAfterDraw += keeperAfterDraw
@@ -240,9 +244,9 @@ class MulliganTester(ABC):
                 
                 if np.sum(results) > 0:
                     self.improvement_after_draw_keeper[j] += improvedAfterDraw
-                    foundKeeper = True
-                    if np.sum(resultAfterTS) == 0:
+                    if foundKeeper and np.sum(resultAfterTS) == 0:
                         tsBrokeKeeper = True
+                    foundKeeper = True
                 if not keeperAfterDraw and np.sum(resultAfterDraw) > 0:
                     keeperAfterDraw = True
             self.successAfterDraw += keeperAfterDraw
@@ -299,9 +303,9 @@ class MulliganTester(ABC):
                 
                 if np.sum(results) > 0:
                     self.improvement_after_draw_keeper[j] += improvedAfterDraw
-                    foundKeeper = True
-                    if np.sum(resultAfterTS) == 0:
+                    if foundKeeper and np.sum(resultAfterTS) == 0:
                         tsBrokeKeeper = True
+                    foundKeeper = True
                 if not keeperAfterDraw and np.sum(resultAfterDraw) > 0:
                     keeperAfterDraw = True
             self.successAfterDraw += keeperAfterDraw
