@@ -84,7 +84,7 @@ class LimitedMullTester(MulliganTester):
                 keepable = True
             else:
                 GoodCurve = True
-        elif numSpells >= 2 and self.playByThree and ((numPrimaryLand > 0 and numCheapPrimary > 0) or (numSecondaryland > 0 and numCheapSecondary > 0)) :
+        elif numLands > 1 and numSpells >= 2 and self.playByThree and ((numPrimaryLand > 0 and numCheapPrimary > 0) or (numSecondaryland > 0 and numCheapSecondary > 0)) :
             keepable = True
 
         results = np.array([PerfectCurve, GoodCurve, keepable])
