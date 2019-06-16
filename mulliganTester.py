@@ -34,10 +34,6 @@ class MulliganTester(ABC):
     def run(self):
         self.runLondon()
         self.printResults("London")
-        #self.runParis()
-        #self.printResults("Paris")
-        #self.runVancouver()
-        #self.printResults("Vancouver")
         self.runParis()
         self.printResults("Paris")
         self.runVancouver()
@@ -314,9 +310,12 @@ class MulliganTester(ABC):
 
     def checkImprovement(self, resultBeforeDraw, resultAfterDraw):
         if True in resultAfterDraw:
-            bestNewRating = np.argmax(resultAfterDraw)
-            bestOldRating = np.argmax(resultBeforeDraw)
-            return bestNewRating < bestOldRating
+            if True in resultBeforeDraw:
+                bestNewRating = np.argmax(resultAfterDraw)
+                bestOldRating = np.argmax(resultBeforeDraw)
+                return bestNewRating < bestOldRating
+            else:
+                return True
         else:
             return False
 

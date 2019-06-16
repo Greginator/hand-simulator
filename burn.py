@@ -26,7 +26,7 @@ class BurnMullTester(MulliganTester):
 
         numSpells = self.hand.handsize() - numLands
 
-        if numSpells >= 5 and numRW >= 1 and numEarlyThreat >= 1:
+        if numLands > 1 and numSpells >= 5 and numRW >= 1 and numEarlyThreat >= 1:
             twolandCreature = True
         elif numLands > 1 and (numSpells >= 4 or (numSpells >= 3 and numEarlyThreat > 0)):
             goodhand = True
