@@ -177,14 +177,13 @@ class MulliganTester(ABC):
             i += 1
         if best is None:
             handIndex = self.pickBestHandSubset()
-            if handIndex == None:
-                handIndex = 0
-            best = results[handIndex]
+            if handIndex is not None:
+                best = results[handIndex]
             
         return handIndex
 
     def pickBestHandSubset(self):
-        return 0
+        return None
 
     def runLondon(self):
         self.resetCounters()
@@ -198,6 +197,7 @@ class MulliganTester(ABC):
             for j in range(0,(self.starting_size + 1) - self.mullto):
                 size = self.starting_size - j
                 self.hand.new_hand(self.starting_size)
+                drawn = False
                 if j > 0:
                     subResults = []
                     self.hand.generate_subset_hands(j)
@@ -205,15 +205,32 @@ class MulliganTester(ABC):
                         self.hand.nextSubset()
                         subResults.append(self.CheckHand())
                     bestIndex = self.getBestResult(subResults)
-                    self.hand.chooseSubset(bestIndex)
-                    results = subResults[bestIndex]
+                    
+                    if bestIndex is None:
+                        subAfterDrawResults = []
+                        self.hand.subsetIndex = -1
+                        drawnCard = self.hand.draw_card()
+                        for k in range(0, self.hand.num_subsets):
+                            self.hand.nextSubset()
+                            self.hand.draw_card(drawnCard)
+                            subAfterDrawResults.append(self.CheckHand())
+                        bestIndex = self.getBestResult(subAfterDrawResults)
+                        if bestIndex is None:
+                            bestIndex = 0
+                        self.hand.chooseSubset(bestIndex)
+                        self.hand.draw_card(drawnCard)
+                        results = subResults[bestIndex]
+                    else:
+                        self.hand.chooseSubset(bestIndex)
+                        results = subResults[bestIndex]
+                        self.hand.draw_card()
                 else:
                     results = self.CheckHand()
+                    self.hand.draw_card()
 
                 self.good_counts[size - self.mullto] += (np.sum(results) > 0)
                 self.hand_counts[size - self.mullto,:] += results
 
-                self.hand.draw_card()
                 resultAfterDraw = self.CheckHand()
 
                 improvedAfterDraw = self.checkImprovement(results, resultAfterDraw)

@@ -64,6 +64,7 @@ class Hand:
         self.subsetIndex += 1
         self.card_counts = Counter(self.subsetHands[self.subsetIndex])
         self.cards = set(self.card_counts.keys())
+        self.size = sum(self.card_counts.values())
 
     def generate_subset_hands(self, numHide, noRemoveList = []):
         if numHide > 2:
@@ -94,17 +95,21 @@ class Hand:
         self.draw_card()
         self.size += -1 #Set size after so we don't redraw this card
 
-    def draw_card(self):
-        choice = np.random.choice(len(self.deck) - self.size, 1)[0]
+    def draw_card(self, choice = None):
+        if choice is None:
+            choice = np.random.choice(len(self.deck) - self.size, 1)[0]
 
-        if choice in self.draws:
-            choice = len(self.deck) - len(self.draws) + np.where(self.draws==choice)[0][0]
-
+            if choice in self.draws:
+                choice = len(self.deck) - len(self.draws) + np.where(self.draws==choice)[0][0]
+            
+            self.draws = np.append(self.draws, choice)
+        
         self.lastDraw = self.deck[choice]
         self.card_counts[self.lastDraw] += 1
-        self.draws = np.append(self.draws, choice)
         self.cards = set(self.card_counts.keys())
         self.size += 1
+
+        return choice
 
     def new_hand(self, size=7):
         self.size = size
