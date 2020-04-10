@@ -1,0 +1,4 @@
+18 human
+24 land
+4 winota
+14 goblin
