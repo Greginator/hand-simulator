@@ -1,6 +1,7 @@
 import numpy as np
 from collections import Counter
 import scipy.stats as sps
+import itertools
 
 
 class Hand:
@@ -67,10 +68,11 @@ class Hand:
         self.size = sum(self.card_counts.values())
 
     def generate_subset_hands(self, numHide, noRemoveList = []):
-        if numHide > 2:
-            raise Exception('not implemented for more than 2')
+        #if numHide > 2:
+        #    raise Exception('not implemented for more than 2')
         self.origHand = self.card_counts.copy()
         counterAsList = sorted(self.card_counts.elements())
+        """
         self.subsetHands = []
         for i in range(0, self.size):
             if counterAsList[i] in noRemoveList:
@@ -85,7 +87,51 @@ class Hand:
                     self.subsetHands.append(subsubHand)
             else:
                 self.subsetHands.append(subHand)
+        """
 
+        handSubsets = list(itertools.combinations(counterAsList, self.size - numHide))
+
+        """yeet2 = yeet[:]
+        if(len(noRemoveList)>0):
+            #for i in range(0, len(yeet)):
+            #    iCounter = Counter(yeet[i])
+            #    print("i counter")
+            #    print(iCounter)
+            #    print(noRemoveList)
+            #    for j in noRemoveList:
+            #        print(j)
+            #        if(self.origHand[j] != iCounter[j]):
+            #            print("OH NO OWN GOAL")
+            #            del yeet[i]
+            #            i = i - 1
+
+            for i in range(0, len(yeet2)):
+                print(yeet2[i])
+                iCounter = Counter(yeet2[i])
+                print("i counter")
+                print(iCounter)
+                print(noRemoveList)
+                for removeCardName in noRemoveList:
+                    print(removeCardName)
+                    print(self.origHand[removeCardName])
+                    print(iCounter[removeCardName])
+                    if(self.origHand[removeCardName] != iCounter[removeCardName]):
+                        print("OH NO OWN GOAL")
+                        print(yeet2)
+                        print(i)
+                        print(yeet)
+                        del yeet[i]
+                        #i = i - 1 """
+
+        def equalNumberOfNotToBeRemovedCards(subsetHand, noRemoveList):
+            handCount = Counter(subsetHand)
+            for cardNameToNotBeRemoved in noRemoveList:
+                #if the number of cardName in the subset hand is less than the original hand
+                if(self.origHand[cardNameToNotBeRemoved] != handCount[cardNameToNotBeRemoved]):
+                    return False
+            return True
+
+        self.subsetHands = [x for x in handSubsets if equalNumberOfNotToBeRemovedCards(x, noRemoveList)]
         self.num_subsets = len(self.subsetHands)
         self.subsetIndex = -1
         self.size = self.size - numHide

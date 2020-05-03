@@ -1,0 +1,51 @@
+London - 1 iterations
+
+Probabilities of good hands:
+4,5,6,7,
+0.0,0.0,1.0,1.0,
+
+hand sizes/types,ShouldNotBeOk,ShouldBeOK,
+7,1.0,1.0,
+6,1.0,1.0,
+5,0.0,0.0,
+4,0.0,0.0,
+
+
+After Draw
+Probabilities of good hands:
+4,5,6,7,
+0.0,0.0,1.0,1.0,
+
+hand sizes/types,ShouldNotBeOk,ShouldBeOK,
+7,1.0,1.0,
+6,1.0,1.0,
+5,0.0,0.0,
+4,0.0,0.0,
+
+
+After Draw & Thoughtseize
+Probabilities of good hands:
+4,5,6,7,
+nan,nan,1.0,1.0,
+
+hand sizes/types,ShouldNotBeOk,ShouldBeOK,
+7,1.0,1.0,
+6,1.0,1.0,
+5,nan,nan,
+4,nan,nan,
+
+p of good hand by 5
+1.0
+p of improvement after draw
+7,6,5
+[0.0, 0.0, 0.0, 0.0]
+p of good hand after draw
+1.0
+
+Thoughtseize Probabilities
+7,6,5,Hurt Keepable Hand
+[0.0, 0.0, 0.0, 0.0]
+Broke Keepable Hand
+[0.0, 0.0, 0.0, 0.0]
+Broke Kept hand
+0.0

@@ -1,0 +1,48 @@
+Vancouver - 10000 iterations
+
+Probabilities of good hands:
+5,6,7,
+0.0265,0.0983,0.2032,
+
+hand sizes/types,ShouldNotBeOk,ShouldBeOK,
+7,0.0502,0.2032,
+6,0.0131,0.0983,
+5,0.0,0.0265,
+
+
+After Draw
+Probabilities of good hands:
+5,6,7,
+0.1339,0.2701,0.341,
+
+hand sizes/types,ShouldNotBeOk,ShouldBeOK,
+7,0.1223,0.341,
+6,0.0746,0.2701,
+5,0.0185,0.1339,
+
+
+After Draw & Thoughtseize
+Probabilities of good hands:
+5,6,7,
+1.0,1.0,1.0,
+
+hand sizes/types,ShouldNotBeOk,ShouldBeOK,
+7,0.35865102639296187,1.0,
+6,0.2761940022213995,1.0,
+5,0.13816280806572068,1.0,
+
+p of good hand by 5
+0.2982
+p of improvement after draw
+7,6,5
+[0.2099, 0.2333, 0.1259]
+p of good hand after draw
+0.5823
+
+Thoughtseize Probabilities
+7,6,5,Hurt Keepable Hand
+[0.0, 0.0, 0.0]
+Broke Keepable Hand
+[0.0, 0.0, 0.0]
+Broke Kept hand
+0.0
