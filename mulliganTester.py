@@ -379,12 +379,16 @@ class MulliganTester(ABC):
             file.write("p of good hand by " + str(self.mullto) + "\n")
             file.write(str(p_success) + "\n")
             file.write("p of improvement after draw\n")
-            file.write("7,6,5\n")
+            for size in range(7,self.mullto-1,-1):
+                file.write(str(size) + ",")
+            file.write("\n")
             file.write(str(p_drawImprovement) + "\n")
             file.write("p of good hand after draw\n")
             file.write(str(p_successAfterDraw) + "\n\n")
             file.write("Thoughtseize Probabilities\n")
-            file.write("7,6,5,Hurt Keepable Hand\n")
+            for size in range(7,self.mullto-1,-1):
+                file.write(str(size) + ",")
+            file.write("Hurt Keepable Hand\n")
             file.write(str(p_TS_hurt) + "\n")
             file.write("Broke Keepable Hand\n")
             file.write(str(p_TS_broke) + "\n")
