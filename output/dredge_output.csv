@@ -1,0 +1,17 @@
+500000 iterations
+
+Probabilities of good hands:
+3,4,5,6,7,
+0.014666,0.072372,0.171636,0.2931,0.420446,
+
+hand sizes/types,2 Lands Dredge 2 Discard,2 Lands Dredge Discard,2 Lands Faithless 2 Creatures,1 Land Dredge Faithless,
+7,0.144536,0.351102,0.029092,0.21034,
+6,0.067608,0.230424,0.011768,0.14776,
+5,0.019304,0.120996,0.0028,0.092412,
+4,0.0,0.039228,0.0,0.046298,
+3,0.0,0.0,0.0,0.014666,
+
+p of good hand by 5
+0.660566
+p of good hand by 3
+0.6896
