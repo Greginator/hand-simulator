@@ -177,7 +177,7 @@ class MulliganTester(ABC):
                         handIndex = i
             i += 1
         if best is None:
-            #use for limited
+            #used for limited
             handIndex = self.pickBestHandSubset()
             if handIndex is not None:
                 best = results[handIndex]
