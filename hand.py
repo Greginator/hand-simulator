@@ -93,12 +93,14 @@ class Hand:
 
     def draw_card(self, choice = None):
         if choice is None:
-            choice = np.random.choice(len(self.deck) - self.size, 1)[0]
+            choice = np.random.choice(len(self.deck), 1)[0]
 
-            if choice in self.draws:
-                choice = len(self.deck) - len(self.draws) + np.where(self.draws==choice)[0][0]
+            while choice in self.draws:
+                if(len(self.draws)>=len(self.deck)):
+                    raise Exception("Attempting to draw from an empty library.")
+                choice = np.random.choice(len(self.deck), 1)[0]
             
-            self.draws = np.append(self.draws, choice)
+        self.draws = np.append(self.draws, choice)
         
         self.lastDraw = self.deck[choice]
         self.card_counts[self.lastDraw] += 1
